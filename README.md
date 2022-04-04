@@ -1,2 +1,3 @@
 # Mini-studio
-Mini studio
+
+Un projet de test
