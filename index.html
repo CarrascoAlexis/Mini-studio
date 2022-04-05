@@ -1,12 +1,137 @@
 <!DOCTYPE html>
+
+<!-- Début section head  -->
+
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Adaptation mobile (viewport)  -->
+  <meta name="author" content="Alexis Carrasco, Tony Dang, Enzo Bossé, Baptiste Couturier"> <!-- Auteurs du code  -->
+  <meta name="description" content="">
+  <meta name="keywords" content="Développeur, Informaticien, Gaming Campus, Gaming Tech, Jeu, IDLE, Tony, Alexis, Enzo, Baptiste">
+  <link rel="icon" type="image/x-icon" href="img/icon.ico"> <!-- Favicon (icone de la page web)  -->
+
+  <!-- Début importation librairie -->
+
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="js/index.js">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Chargement du font -->
+
+  <!-- Fin importation librairie  -->
+
+  <title> Nom du studio </title>    <!-- Titre de la page web -->
+
 </head>
+<!-- Fin section head  -->
 <body>
-    
+
+  <!-- Début section header  -->
+
+  <header class="header">
+
+    <a href="#home" class="logo">
+      <img src="img/logo.png" alt="logo">
+    </a>
+
+    <nav class="navbar">
+      <a href="#about">A propos</a>
+      <a href="#game">Le jeu</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="icons">
+      <div class="fas fa-search" id="search-btn"></div>
+      <div class="fas fa-bars" id="menu-btn"></div>
+    </div>
+
+    <div class="search-form">
+      <input type="search" id="search-box" placeholder="Chercher ici...">
+      <label for="search-box" class="fas fa-search"></label>
+    </div>
+
+  </header>
+
+  <!-- Fin section header -->
+
+  <!-- Début section home  -->
+
+  <section class="home" id="home">
+
+    <div class="content">
+      <h3>Projet Mini-Studio </h3>
+      <p>Création d'un mini-jeu vidéo en 2D avec Phaser</p>
+      <a href="#" class="btn">Voir le CDC</a>
+    </div>
+
+  </section>
+
+  <!-- Fin section home -->
+
+  <!-- Début section contact  -->
+
+  <section class="contact" id="contact">
+
+    <h1 class="heading"> <span> Nous </span> contacter </h1>
+
+    <div class="row">
+
+      <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.9424462469597!2d2.381338915126026!3d48.89743400591176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66db2124ab5e7%3A0x41a436cb6f094f57!2sGaming%20Campus%20Paris%20%3A%20%C3%A9cole%20m%C3%A9tiers%20jeux%20vid%C3%A9o!5e0!3m2!1sfr!2sfr!4v1649200934393!5m2!1sfr!2sfr" allowfullscreen="" loading="lazy"></iframe>
+
+      <form action="">
+
+        <h3>Entrer en contact</h3>
+
+        <div class="inputBox">
+          <span class="fas fa-user"></span>
+          <input type="text" placeholder="Nom">
+        </div>
+
+        <div class="inputBox">
+          <span class="fas fa-envelope"></span>
+          <input type="email" placeholder="Email">
+        </div>
+
+        <div class="inputBox">
+          <span class="fas fa-phone"></span>
+          <input type="number" placeholder="Numéro de téléphone">
+        </div>
+
+        <input type="submit" value="Envoyer" class="btn">
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- Fin section contact -->
+
+  <!-- Début section footer  -->
+
+  <section class="footer">
+
+    <div class="share">
+      <a href="#" class="fab fa-facebook-f"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+      <a href="#" class="fab fa-linkedin"></a>
+    </div>
+
+    <div class="links">
+      <a href="#"> Portfolio d'Alexis </a>
+      <a href="https://tdang.alwaysdata.net"> Portfolio de Tony </a>
+      <a href="#"> Portfolio d'Enzo </a>
+      <a href="#"> Portfolio de Baptiste </a>
+    </div>
+
+    <div class="credit">Créé par <span>Alexis C, Tony D, Enzo B, Baptiste C</span> | Tout droit réservés</div>
+
+  </section>
+
+  <!-- Fin section footer -->
+
+  <!-- custom js file link  -->
+  <script src="js/index.js"></script>
+
 </body>
 </html>
