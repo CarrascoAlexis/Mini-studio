@@ -94,7 +94,6 @@ section{
 }
 
 .header .navbar a:hover{
-    color:var(--main-color);
     border-bottom: .1rem solid var(--main-color);
     padding-bottom: .5rem;
 }
@@ -107,7 +106,7 @@ section{
 }
 
 .header .icons div:hover{
-    color:var(--main-color);
+    color:#C133FF;
 }
 
 #menu-btn{
@@ -203,7 +202,7 @@ section{
     text-align: center;
 }
 
-.home{
+.home {
     min-height: 100vh;
     display: flex;
     align-items: center;
