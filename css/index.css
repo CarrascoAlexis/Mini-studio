@@ -94,7 +94,6 @@ section{
 }
 
 .header .navbar a:hover{
-    color:var(--main-color);
     border-bottom: .1rem solid var(--main-color);
     padding-bottom: .5rem;
 }
@@ -107,7 +106,7 @@ section{
 }
 
 .header .icons div:hover{
-    color:var(--main-color);
+    color:#C133FF;
 }
 
 #menu-btn{
@@ -118,12 +117,18 @@ section{
     position: absolute;
     top:115%; right: 7%;
     background: #fff;
-    width: 50rem;
+    width: 25rem;
     height: 5rem;
     display: flex;
     align-items: center;
     transform: scaleY(0);
     transform-origin: top;
+}
+
+.header .search-form a{
+  margin:0 1rem;
+  font-size: 1.6rem;
+  color:var(--black);
 }
 
 .header .search-form.active{
@@ -150,66 +155,21 @@ section{
     color:var(--main-color);
 }
 
-.header .cart-items-container{
-    position: absolute;
-    top:100%; right: -100%;
-    height: calc(100vh - 9.5rem);
-    width: 35rem;
-    background: #fff;
-    padding:0 1.5rem;
-}
-
-.header .cart-items-container.active{
-    right: 0;
-}
-
-.header .cart-items-container .cart-item{
-    position: relative;
-    margin:2rem 0;
-    display: flex;
-    align-items: center;
-    gap:1.5rem;
-}
-
-.header .cart-items-container .cart-item .fa-times{
-    position: absolute;
-    top:1rem; right: 1rem;
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--black);
-}
-
-.header .cart-items-container .cart-item .fa-times:hover{
-    color:var(--main-color);
-}
-
-.header .cart-items-container .cart-item img{
-    height: 7rem;
-}
-
-.header .cart-items-container .cart-item .content h3{
-    font-size: 2rem;
-    color:var(--black);
-    padding-bottom: .5rem;
-}
-
-.header .cart-items-container .cart-item .content .price{
-    font-size: 1.5rem;
-    color:var(--main-color);
-}
-
-.header .cart-items-container .btn{
-    width: 100%;
-    text-align: center;
-}
-
-.home{
+.home {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background:url(../img/home.png) no-repeat;
+    /* background:url(../img/home.png) no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center; */
+}
+
+.home .video-content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  object-fit: cover;
+  z-index:-1;
 }
 
 .home .content{
