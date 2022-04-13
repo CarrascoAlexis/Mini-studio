@@ -154,8 +154,3 @@ section{
 .header .search-form label:hover{
     color:var(--main-color);
 }
-
-
-.m-top{
-    margin-top: 150px;
-}

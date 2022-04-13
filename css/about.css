@@ -1,3 +1,17 @@
+.heading-about{
+    text-align: center;
+    color:#fff;
+    text-transform: uppercase;
+    padding-top: 100px;
+    padding-bottom: 3.5rem;
+    font-size: 4rem;
+}
+
+.heading-about span{
+    color:var(--main-color);
+    text-transform: uppercase;
+}
+
 .team .box-container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -14,7 +28,11 @@
     font-size: 1.5rem;
     line-height: 1.8;
     color:#ccc;
-    padding:2rem 0;
+    padding:1rem 0;
+}
+
+.team .box-container .box span{
+    color:var(--main-color);
 }
 
 .team .box-container .box .user{
@@ -28,4 +46,76 @@
     padding:1rem 0;
     font-size: 2rem;
     color:#fff;
+}
+
+.team .box-container .box .stars p{
+    color:var(--main-color);
+}
+
+.team .box-container .box .stars i{
+    font-size: 1.5rem;
+    color:#ffff;
+}
+
+.project .row{
+    display: flex;
+    align-items: center;
+    background:var(--black);
+    flex-wrap: wrap;
+}
+
+.project .row .image{
+    flex:1 1 45rem;
+}
+
+.project .row .image img{
+    width: 100%;
+}
+.project .row .content{
+    flex:1 1 45rem;
+    padding:2rem;
+}
+
+.project .row .content h3{
+    font-size: 3rem;
+    color:#fff;
+}
+
+.project .row .content p{
+    font-size: 1.6rem;
+    color:#ccc;
+    padding:1rem 0;
+    line-height: 1.8;
+}
+
+
+.organize .row{
+    display: flex;
+    align-items: center;
+    background:var(--black);
+    flex-wrap: wrap;
+}
+
+.organize .row .image{
+    flex:1 1 45rem;
+}
+
+.organize .row .image img{
+    width: 100%;
+}
+.organize .row .content{
+    flex:1 1 45rem;
+    padding:2rem;
+}
+
+.organize .row .content h3{
+    font-size: 3rem;
+    color:#fff;
+}
+
+.organize .row .content p{
+    font-size: 1.6rem;
+    color:#ccc;
+    padding:1rem 0;
+    line-height: 1.8;
 }
