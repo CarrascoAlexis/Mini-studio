@@ -19,7 +19,6 @@ class Game{
         }else{
             this.menu = true;
         }
-        console.log(this.menu);
     }
 
     setMenu(value){
@@ -32,7 +31,7 @@ class Game{
 
     drawTest(main){
         let text = main.add.text(0,window.innerHeight - 60, "+", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 }).setInteractive();
-        text.on('pointerdown', this.toggleMenu);
+        text.on('pointerdown', function(){console.log(main)});
     }
 
     drawTime(main){
