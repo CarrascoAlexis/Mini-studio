@@ -31,7 +31,9 @@ class Game{
 }
 
 class Tile{
+    constructor(x,y){
 
+    }
 }
 
 var config = {
@@ -46,8 +48,8 @@ var config = {
 
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
     scene: {
         preload: preload,
         create: create,
@@ -59,22 +61,16 @@ var phaserGame = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('roof', 'assets/grass.png');
+    this.load.image('grass', 'assets/grass.png');
 }
 
 function create ()
 {
-    
-    this.add.image(0, 0, 'roof').setOrigin(0,0);
-    var roofHeight = this.textures.get('roof').getSourceImage().height;
-    var roofWidth = this.textures.get('roof').getSourceImage().width;
-    // for(let i = 0; i <= 800 - roofWidth; i+=roofWidth ){
-    //     for(let j = 0; j < 600 - roofHeight; j+=roofHeight){
-    //         this.add.image(i, j, 'roof').setOrigin(0,0);
-    //         this.add.image(i, j, 'roof');
-    //         console.log("test");
-    //     }
-    // }
+    var grassHeight = this.textures.get('grass').getSourceImage().height;
+    var grassWidth = this.textures.get('grass').getSourceImage().width;
+
+    this.add.image(window.innerWidth / 2, window.innerHeight / 2 - grassHeight * 2, 'grass');
+    this.add.image(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 - grassHeight * 1.5 -5, 'grass');
 }
 
 function update ()
