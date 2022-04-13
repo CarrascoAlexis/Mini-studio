@@ -1,22 +1,59 @@
 class Game{
-    constructor(amount, rebirth, main){
+    constructor(amount, rebirth){
         this.amount = amount;
         this.rebirthCount = rebirth;
         this.data = {};
-        this.main = main;
+        this.start = Date.now();
+        this.menu = false;
     }
 
     init(){
         this.initGrid();
+        this.start = Date.now();
+        this.menu = false;
     }
 
-    drawMoney(){
-        // let text = this.amount + "$"; 
-        this.main.add.text(0, 0, 'Hello World', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    toggleMenu(){
+        if(this.menu == true){
+            this.menu = false;
+        }else{
+            this.menu = true;
+        }
+        console.log(this.menu);
     }
 
-    update(){
-        this.drawMoney();
+    setMenu(value){
+        this.menu = value;
+    }
+
+    drawMoney(main){
+        main.add.text(0, 0, this.amount + "$", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 });
+    }
+
+    drawTest(main){
+        let text = main.add.text(0,window.innerHeight - 60, "+", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 }).setInteractive();
+        text.on('pointerdown', this.toggleMenu);
+    }
+
+    drawTime(main){
+        main.add.text(window.innerWidth - 260, 0, "Temps de jeu : " + new Date(Date.now() - this.start).toISOString().slice(11, 19), { color: 'white', align: 'center', backgroundColor:'blue', padding:10 });
+    }
+
+    drawAttractions(main){
+        for(let i = 0; i < this.data.grid.height; i++){
+            console.log("Test");
+        }
+    }
+
+    drawMenu(main){
+        console.log("Menu");
+    }
+
+    render(main){
+        this.drawMoney(main);
+        this.drawAttractions(main);
+        this.drawTime(main);
+        this.drawTest(main);
     }
 
     initGrid(){
@@ -32,6 +69,10 @@ class Game{
 
     addMoney(amount){
         this.amount += (this.rebirthCount + 1) / 10 * amount;
+    }
+
+    withdrow(amount){
+        this.amount -= amount;
     }
 
     rebirth(){
@@ -78,7 +119,7 @@ var config = {
 };
 
 var phaserGame = new Phaser.Game(config);
-var game = new Game(100,0, this);
+var game = new Game(100,0, phaserGame);
 
 function preload ()
 {
@@ -115,12 +156,10 @@ function create ()
     this.add.image(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 + grassHeight * 0.5, 'grass');
     this.add.image(window.innerWidth / 2 + grassWidth * 1, window.innerHeight / 2 + grassHeight, 'grass');
 
-    this.add.text(0,0,"test", {color:white});
-
-    let test = new Tile(0,0,this);
+    let test = new Tile(0,0);
 }
 
 function update ()
 {
-    game.update();
+    game.render(this);
 }
