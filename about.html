@@ -1,5 +1,7 @@
 <html lang="fr">
+
 <head>
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Adaptation mobile (viewport)  -->
@@ -10,144 +12,85 @@
 
   <!-- Début importation librairie -->
 
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/about.css">
-  <link rel="stylesheet" href="js/about.js">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="js/header.js">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Chargement du font -->
 
   <!-- Fin importation librairie  -->
+
+</head>
+<body>
+
   <!-- Début section header  -->
 
-    <header class="header">
+  <header class="header">
 
-      <a href="#home" class="logo">
-        <img src="img/logo.png" alt="logo">
-      </a>
+    <a href="index.html" class="logo">
+      <img src="img/logo.png" alt="logo">
+    </a>
 
-      <nav class="navbar">
-        <a href="#about">A propos</a>
-        <a href="#game">Le jeu</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <nav class="navbar">
+      <a href="about.html">A propos</a>
+      <a href="game.html">Le jeu</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
 
-      <div class="icons">
-        <div class="fas fa-search" id="search-btn"></div>
-        <div class="fas fa-bars" id="menu-btn"></div>
-      </div>
+    <div class="icons">
+      <div class="fas fa-globe" id="search-btn"></div>
+      <div class="fas fa-bars" id="menu-btn"></div>
+    </div>
 
-      <div class="search-form">
-        <input type="search" id="search-box" placeholder="Chercher ici...">
-        <label for="search-box" class="fas fa-search"></label>
-      </div>
+    <div class="search-form">
+      <input type="search" id="search-box" placeholder="Chercher ici...">
+      <label for="search-box" class="fas fa-search"></label>
+    </div>
 
-    </header>
+  </header>
+
   <!-- Fin section header -->
 
-<body class="back">
+  <!-- Début section team  -->
 
-<!--<div>
-    <h1 class="title">PRESENTATION EQUIPE</h1>
-    <div class="flexing">
-    <p class="owo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-        Tenetur molestias blanditiis nulla impedit provident quis eligendi ipsum fugit molestiae <br>
-        qui dicta illo nihil quos, quod eaque rem quisquam culpa amet.<br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-        Tenetur molestias blanditiis nulla impedit provident quis eligendi ipsum fugit molestiae <br>
-        qui dicta illo nihil quos, quod eaque rem quisquam culpa amet.<br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-        Tenetur molestias blanditiis nulla impedit provident quis eligendi ipsum fugit molestiae <br>
-        qui dicta illo nihil quos, quod eaque rem quisquam culpa amet.<br>
-    </p>
+  <section class="team" id="team">
 
-    </div>
-    <img class="kekw" src="img/kekw.jpg" alt="">
-</div>!-->
+    <h1 class="heading"> Présentation <span>équipe</span> </h1>
 
+    <div class="box-container">
 
-<section class="about" id="about">
-
-    <div class="content ">
-      <h1>PRESENTATION EQUIPE</h1>
-      <div class="container">
-        <div class="card-carousel">
-          <div class="card" id="1">
-            <div class="image-container"></div>
-            <p>Baptiste Couturier</p>
-          </div>
-          <div class="card" id="2">
-            <div class="image-container"></div>
-            <p>Enzo BOSSE</p>
-          </div>
-          <div class="card" id="3">
-            <div class="image-container"></div>
-            <p>Tony .</p>
-          </div>
-          <div class="card" id="4">
-            <div class="image-container"></div>
-            <p>Alexis CARRASCO</p>
-          </div>
-          <div class="card" id="5">
-            <div class="image-container"></div>
-            <p>marchepo</p>
-          </div>
-        </div>
-        <a href="#" class="visuallyhidden card-controller">Carousel controller</a>
+      <div class="box">
+        <h3>Alexis Carrasco</h3>
+        <img src="img/kroko.png" class="user" alt="">
+        <p> <span>• Occupation : </span> Etudiant Gaming Campus </p>
       </div>
 
-</div>
+      <div class="box">
+        <h3>Tony Dang</h3>
+        <img src="img/kroko.png" class="user" alt="">
+        <p> <span>• Occupation : </span> Etudiant Gaming Campus </p>
+      </div>
 
+      <div class="box">
+        <h3>Enzo Bossé</h3>
+        <img src="img/kroko.png" class="user" alt="">
+        <p> <span>• Occupation : </span> Etudiant Gaming Campus </p>
+      </div>
 
-<div class="content">
-      <h2>PRESENTATION PROJET</h2>
-      <p>
-          <br>
-            <br>
-        Demain, au sein d’un studio, vous serez amenées à collaborer sur un même projet à plusieurs.<br>
-          <br>
-        A travers ce travail en équipe, vous mettrez vos compétences expertes sur vos domaines au service d’un objectif commun de production dans un délai réduit.<br>
-        <br>
-        En groupe, chaque équipe constituera UN MINI STUDIO et vous devrez imaginer ensemble un jeu 2D et le développer afin de porter ensemble la réussite de votre MINI STUDIO.<br>
-          <br>
-        Il faudra également développer une one page présentant votre MINI STUDIO avec un lien permettant d’ouvrir votre jeu sur une autre page.<br>
-          <br>
-            <br>
-      </p>
-</div>
+      <div class="box">
+        <h3>Baptiste Couturier</h3>
+        <img src="img/kroko.png" class="user" alt="">
+        <p> <span>• Occupation : </span> Etudiant Gaming Campus </p>
+      </div>
 
+    </div>
 
-<div class="content">
-      <h3>ORGANISATION</h3>
-      <p>
-        <br>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>
-         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."<br>
-         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>
-         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."<br>
-         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>
-         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."<br>
-        <br>
-      </p>
-        <a href="https://trello.com/b/o01rT3sG/mini-studio" class="btn"> Voir le Trello</a>
-</div>
+  </section>
 
+  <!-- Fin section team -->
 
-
-
-
-
-
-
-
-</section>
-
-</body>
-<!-- Début section footer  -->
+  <!-- Début section footer  -->
 
   <section class="footer">
 
@@ -159,7 +102,7 @@
     </div>
 
     <div class="links">
-      <a href="#"> Portfolio d'Alexis </a>
+      <a href="https://baggadream.fr"> Portfolio d'Alexis </a>
       <a href="https://tdang.alwaysdata.net"> Portfolio de Tony </a>
       <a href="#"> Portfolio d'Enzo </a>
       <a href="#"> Portfolio de Baptiste </a>
@@ -170,5 +113,7 @@
   </section>
 
   <!-- Fin section footer -->
-    <script src="js/about.js"></script>
+
+</body>
+<script src="js/header.js"></script>
 </html>
