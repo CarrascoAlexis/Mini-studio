@@ -7,6 +7,8 @@ class Game{
         this.menu = false;
         this.lastFrame = Date.now();
         this.elapsed = 0;
+        this.posX = 0;
+        this.posY = 0;
     }
 
     init(main){
@@ -15,27 +17,12 @@ class Game{
         this.menu = false;
         this.lastFrame = Date.now();
         this.elapsed = 0;
-    }
-
-    toggleMenu(){
-        if(this.menu == true){
-            this.menu = false;
-        }else{
-            this.menu = true;
-        }
-    }
-
-    setMenu(value){
-        this.menu = value;
+        this.posX = 0;
+        this.posY = 0;
     }
 
     drawMoney(main){
         main.add.text(0, 0, this.amount + "$", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 });
-    }
-
-    drawTest(main){
-        let text = main.add.text(0,window.innerHeight - 60, "+", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 }).setInteractive();
-        //text.on('pointerdown', game.toggleMenu);
     }
 
     drawTime(main){
@@ -44,21 +31,17 @@ class Game{
 
     drawAttractions(main){
         for(let i = 0; i < this.data.grid.height; i++){
-            console.log("Test");
+            console.log("Test");    
         }
-    }
-
-    drawMenu(main){
-        console.log("Menu");
     }
 
     drawTiles(main){
         for(let i = 0; i < this.tiles.length; i++){
-            this.tiles[i].display(main, 'carousel');
+            this.tiles[i].display(main, null);
         }
     }
 
-    update(){
+    update(main){
         this.elapsed = Date.now() - this.lastFrame;
         this.lastFrame = Date.now();
     }
@@ -81,35 +64,11 @@ class Game{
         var grassHeight = 78;
         var grassWidth = 127;
 
-        this.tiles.push(new Tile(window.innerWidth / 2, window.innerHeight / 2 - grassHeight * 2));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 - grassHeight * 1.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 1, window.innerHeight / 2 - grassHeight));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 1.5, window.innerHeight / 2 - grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 2, window.innerHeight / 2));
-
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 0.5, window.innerHeight / 2 - grassHeight * 1.5));
-        this.tiles.push(new Tile(window.innerWidth / 2, window.innerHeight / 2 - grassHeight * 1));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 - grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 1, window.innerHeight / 2));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 1.5, window.innerHeight / 2 + grassHeight * 0.5));
-    
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 1, window.innerHeight / 2 - grassHeight * 1));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 0.5, window.innerHeight / 2 - grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2, window.innerHeight / 2));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 + grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 1, window.innerHeight / 2 + grassHeight));
-    
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 1.5, window.innerHeight / 2 - grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 1, window.innerHeight / 2));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 0.5, window.innerHeight / 2 + grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2, window.innerHeight / 2 + grassHeight));
-        this.tiles.push(new Tile(window.innerWidth / 2 + grassWidth * 0.5, window.innerHeight / 2 + grassHeight * 1.5));
-    
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 2, window.innerHeight / 2));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 1.5, window.innerHeight / 2 + grassHeight * 0.5));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth, window.innerHeight / 2 + grassHeight * 1));
-        this.tiles.push(new Tile(window.innerWidth / 2 - grassWidth * 0.5, window.innerHeight / 2 + grassHeight * 1.5));
-        this.tiles.push(new Tile(window.innerWidth / 2, window.innerHeight / 2 + grassHeight * 2));
+        for(let i = 0; i < 5; i++){
+            for(let j = 0; j < 5; j++){
+                this.tiles.push(new Tile(i,j));
+            }
+        }
     }
 
     getMoney(){
@@ -145,14 +104,21 @@ class Tile{
     constructor(x, y){
         this.x = x;
         this.y = y;
+        
+        this.grassHeight = 78;
+        this.grassWidth = 127;
     }
 
-    display(main, attraction){
-        main.add.image(this.x,this.y, 'grass');
-        if(attraction != null){
-            main.add.image(this.x - 20, this.y, attraction);
-        }
+    display(main, vueX = 0, vueY = 0, zoom = 1){
+        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * this.grassWidth + vueX, window.innerHeight / 2 + this.grassHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, 'grass');
+        this.image.on('pointerdown', function (){ console.log("test")});
+        this.image.scaleY = zoom;
+        this.image.scaleX = zoom;
     }
+}
+
+class Attraction{
+    
 }
 
 var config = {
@@ -181,15 +147,10 @@ function preload ()
 function create ()
 {
 
-    var tuiles = [];
-
-
-
-
-    let test = new Tile(0,0);
 }
 
 function update ()
 {
+    game.update(this);
     game.render(this);
 }
