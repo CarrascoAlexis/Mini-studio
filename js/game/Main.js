@@ -20,7 +20,7 @@ class Game{
         let background = main.add.image(10,10,'money-bg').setOrigin(0,0);
         background.scaleX = 0.6;
         background.scaleY = 0.6;
-        main.add.text(110, 38, this.data.amount + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
+        main.add.text(110, 38, parseInt(this.data.amount) + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
     }
 
     drawTime(main){
@@ -46,9 +46,9 @@ class Game{
     }
 
     render(main){
+        this.drawTiles(main);
         this.drawMoney(main);   
         this.drawTime(main);
-        this.drawTiles(main);
     }
 
     initGrid(main){
@@ -111,14 +111,29 @@ class Tile{
 
     display(main, vueX = 0, vueY = 0, zoom = 1){
         this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * this.grassWidth + vueX, window.innerHeight / 2 + this.grassHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.type);
-        this.image.on('pointerdown', function (){ console.log("test")});
         this.image.scaleY = zoom;
         this.image.scaleX = zoom;
     }
 }
 
 class Attraction{
-    
+    constructor(x,y,type, texture){
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.texture = texture;
+        this.worth = 100 * (x + 1) * (y + 1);
+    }
+
+    display(main, vueX = 0, vueY = 0, zoom = 1){
+        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * this.grassWidth + vueX, window.innerHeight / 2 + this.grassHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.texture);
+        this.image.scaleY = zoom;
+        this.image.scaleX = zoom;
+    }
+
+    update(game){
+        game.addMoney(this.worth * game.getElapsed() / 10000);
+    }
 }
 
 var config = {
@@ -137,7 +152,7 @@ var config = {
 };
 
 var phaserGame = new Phaser.Game(config);
-var game = new Game(100000,0, phaserGame);
+var game = new Game(100,0, phaserGame);
 
 document.addEventListener("keypress", function(event) {
 	switch(event.key){
@@ -168,6 +183,8 @@ document.addEventListener("wheel", function(event) {
     }
 });
 
+let test = new Attraction(0,0, "coaster", "roller-coaster");
+
 
 function preload ()
 {
@@ -196,4 +213,5 @@ function update ()
     this.add.displayList.removeAll();
     game.update(this);
     game.render(this);
+    test.update(game);
 }
