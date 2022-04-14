@@ -12,28 +12,31 @@
 ### Présentation du projet
 ***
 
-• Le projet consistait à imaginer ensemble un jeu en 2D sur un thème imposé "parc d'attraction" et le développer ensemble dans un groupe de 4 étudiants
+Le projet consistait à imaginer ensemble un jeu en 2D sur un thème imposé "parc d'attraction" et le développer ensemble dans un groupe de 4 étudiants
 
-  Ce projet nous avais permis d'acquérir des connaissances sur l'utilisation de git/trello ainsi que Phaser, mais surtout de développer notre savoir faire sur le travail en équipe
+Ce projet nous avais permis d'acquérir des connaissances sur l'utilisation de git/trello ainsi que Phaser, mais surtout de développer notre savoir faire sur le travail en équipe
 
 ### Equipe
 ***
 
-• Nom : Alexis Carrasco
-• Occupation : Etudiant Gaming Campus & Chef de projet mini-studio
-• Tâches attribuées : Trello, Game design, Gameplay, Vue isométrique, Powerpoint, Readme
+* __Nom__ : Alexis Carrasco
+* __Occupation__ : Etudiant Gaming Campus & Chef de projet mini-studio
+* __Tâches attribuées__ : Trello, Game design, Gameplay, Vue isométrique, Powerpoint, Readme
 
-• Nom : Tony Dang
-• Occupation : Etudiant Gaming Campus
-• Tâches attribuées : Site web complet (landing page, à propos, contact..), Trello
 
-• Nom : Enzo Bossé
-• Occupation : Etudiant Gaming Campus
-• Tâches attribuées : Game design, Gameplay
+* __Nom__ : Tony Dang
+* __Occupation__ : Etudiant Gaming Campus
+* __Tâches attribuées__ : Site web complet (landing page, à propos, contact..), Trello
 
-• Nom : Baptiste Couturier
-• Occupation : Etudiant Gaming Campus
-• Tâches attribuées : Personae
+
+* __Nom__ : Enzo Bossé
+* __Occupation__ : Etudiant Gaming Campus
+* __Tâches attribuées__ : Game design, Gameplay
+
+
+* __Nom__ : Baptiste Couturier
+* __Occupation__ : Etudiant Gaming Campus
+* __Tâches attribuées__ : Personae
 
 ### Installation
 ***
