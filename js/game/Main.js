@@ -93,8 +93,8 @@ class Game{
     }
 
     openMenu(){
-        let att1 = parseInt(Math.random() * 3);
-        let att2 = parseInt(Math.random() * 3);
+        let att1 = parseInt(Math.random() * 6);
+        let att2 = parseInt(Math.random() * 6);
 
         switch(att1){
             case 0:
@@ -103,23 +103,38 @@ class Game{
             case 1:
                 this.image1 = 'bigwheel';
                 break;
+            case 2:
+                this.image1 = 'house';
+                break;
+            case 3:
+                this.image1 = 'tower';
+                break;
+            case 4:
+                this.image1 = 'manege';
+                break;
             default:
                 this.image1 = 'carousel';
                 break;
         }
         switch(att2){
-            case 0:{
+            case 0:
                 this.image2 = 'circus';
                 break;
-            }
-            case 1:{
+            case 1:
                 this.image2 = 'bigwheel';
                 break;
-            }
-            default:{
+            case 2:
+                this.image1 = 'house';
+                break;
+            case 3:
+                this.image1 = 'tower';
+                break;
+            case 4:
+                this.image1 = 'manege';
+                break;
+            default:
                 this.image2 = 'carousel';
                 break;
-            }
         }
         this.menu = true;
     }
@@ -302,6 +317,7 @@ function preload ()
     this.load.image('bigwheel', 'assets/bigwheel.png');
     this.load.image('house', 'assets/house.png');
     this.load.image('tower', 'assets/tower.png');
+    this.load.image('manege', 'assets/manege.png');
 
     this.load.image('money-bg', 'assets/money-bg.png');
     this.load.image('time-bg', 'assets/time-bg.png');
