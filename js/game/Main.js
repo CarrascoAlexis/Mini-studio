@@ -6,14 +6,15 @@ class Game{
 
     init(main){
         this.data = {};
+        this.start = Date.now();
         this.load();
         this.initGrid(main);
-        this.start = Date.now();
         this.lastFrame = Date.now();
         this.elapsed = 0;
         this.posX = 0;
         this.posY = 0;
         this.scale = 1;
+        this.texs = ['']
     }
 
     drawMoney(main){
@@ -23,17 +24,22 @@ class Game{
         main.add.text(110, 38, parseInt(this.data.amount) + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
     }
 
-    addAttraction(main){
+    addAttraction(main, price, texture){
         if(this.data.attractions == null){
             this.data.attractions = [];
         }
 
-        let x = Math.floor(this.data.attractions.length/5);
-        let y = this.data.attractions.length % 5;
-
-        this.data.attractions.push(new Attraction(x, y, "coaster", "roller-coaster"));
-        console.log(this.data.attractions);
+        if(this.data.amount >= price){
+            let x = Math.floor(this.data.attractions.length/5);
+            let y = this.data.attractions.length % 5;
+    
+            this.data.attractions.push(new Attraction(x, y, texture));
+            this.data.amount -= price;
+            this.save();
+            return true;
+        }
         this.save();
+        return false;
     }
 
     drawTime(main){
@@ -55,12 +61,82 @@ class Game{
         }
     }
 
-    update(main, game){
+    drawMenu(main){
+        let price = (this.data.attractions.length - 1) * this.data.attractions.length * 500 + 100;
+        main.add.image(window.innerWidth / 2, window.innerHeight / 2, 'menu-bg');
+        let height = main.textures.get('menu-bg').getSourceImage().height;
+        let width = main.textures.get('menu-bg').getSourceImage().width;
+        let close = main.add.image(window.innerWidth / 2 + width / 2, window.innerHeight / 2 - height / 2, 'close-button').setInteractive();
+        close.scaleX = 0.5;
+        close.scaleY = 0.5;
+        main.add.text(window.innerWidth / 2 - 150,200,"Prix de l'amélioration : " + price + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
+        close.on('pointerdown', function(){ closeMenu()})
+
+        let img1 = main.add.image(window.innerWidth / 2 - width / 4, window.innerHeight / 2, this.image1).setInteractive();
+        let img2 = main.add.image(window.innerWidth / 2 + width / 4, window.innerHeight / 2, this.image2).setInteractive();
+
+        let image1 = this.image1;
+        let image2 = this.image2;
+
+        img1.on('pointerdown', function() {if(addAttraction(price, image1)) location.reload();})
+        img2.on('pointerdown', function() {if(addAttraction(price, image2)) location.reload();})
+            
+    }
+
+    drawAddButton(main){
+        let add = main.add.image(window.innerWidth - 50,window.innerHeight - 50,'close-button').setInteractive();
+        add.rotation = Math.PI / 4;
+        add.scaleX = 0.5;
+        add.scaleY = 0.5;
+        // add.on('pointerdown', function(){ this.openMenu();})
+        add.on('pointerdown', function(){ openMenu()});
+    }
+
+    openMenu(){
+        let att1 = parseInt(Math.random() * 3);
+        let att2 = parseInt(Math.random() * 3);
+
+        switch(att1){
+            case 0:
+                this.image1 = 'circus';
+                break;
+            case 1:
+                this.image1 = 'bigwheel';
+                break;
+            default:
+                this.image1 = 'carousel';
+                break;
+        }
+        switch(att2){
+            case 0:{
+                this.image2 = 'circus';
+                break;
+            }
+            case 1:{
+                this.image2 = 'bigwheel';
+                break;
+            }
+            default:{
+                this.image2 = 'carousel';
+                break;
+            }
+        }
+        this.menu = true;
+    }
+
+    closeMenu(){
+        this.menu = false;
+    }
+
+    update(){
         this.elapsed = Date.now() - this.lastFrame;
         this.lastFrame = Date.now();
         for(let i = 0; i < this.data.attractions.length; i++){
             let value = this.data.attractions[i].worth * this.elapsed / 10000;
             this.data.amount += value;
+        }
+        if(this.data.attractions.length == 25){
+            clear();
         }
     }
 
@@ -73,11 +149,14 @@ class Game{
         this.drawAttractions(main);
         this.drawMoney(main);   
         this.drawTime(main);
+        this.drawAddButton(main);
+        if(this.menu == true){
+            this.drawMenu(main);
+        }
     }
 
     initGrid(main){
         this.data.tiles = [];
-
         for(let i = 0; i < 5; i++){
             for(let j = 0; j < 5; j++){
                 this.data.tiles.push(new Tile(i,j));
@@ -107,12 +186,18 @@ class Game{
 
     load(){
         this.data = JSON.parse(localStorage.getItem('gameSave'));
-        console.log(this.data);
+        if(this.data == null){
+            this.data = {};
+            this.data.attractions = [];
+            this.data.amount = 100;
+        }
         let attractions = [];
         for(let i = 0; i < this.data.attractions.length; i++){
-            attractions.push(new Attraction(this.data.attractions[i].x, this.data.attractions[i].y, this.data.attractions[i].type, this.data.attractions[i].texture))
+            attractions.push(new Attraction(this.data.attractions[i].x, this.data.attractions[i].y, this.data.attractions[i].tex));
         }
         this.data.attractions = attractions;
+
+        this.time = localStorage.getItem
     }
 }
 
@@ -143,22 +228,18 @@ class Tile{
 }
 
 class Attraction{
-    constructor(x,y,type, texture){
+    constructor(x, y, texture){
         this.x = x;
         this.y = y;
-        this.type = type;
-        this.texture = texture;
+        this.tex = texture;
         this.worth = 100 * (x + 1) * (y + 1);
     }
 
     display(main, vueX = 0, vueY = 0, zoom = 1){
-        
-        let imageHeight = 150;
-        let imageWidth = 256;
-        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * imageWidth + vueX, window.innerHeight / 2 + imageHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, 'this.texture');
+        let imageHeight = main.textures.get(this.tex).getSourceImage().height;
+        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * 256 + vueX, window.innerHeight / 2 + 128 * (0.5 * zoom * (this.y + this.x - 4)) + vueY - (imageHeight * zoom) / 4, this.tex);
         this.image.scaleY = zoom;
         this.image.scaleX = zoom;
-        return true;
     }
 
     update(game){
@@ -224,6 +305,8 @@ function preload ()
 
     this.load.image('money-bg', 'assets/money-bg.png');
     this.load.image('time-bg', 'assets/time-bg.png');
+    this.load.image('menu-bg', 'assets/menu-bg.png');
+    this.load.image('close-button', 'assets/close_button.png');
 
     this.load.image('sub-title', 'assets/sub-title.png');
 
@@ -239,10 +322,26 @@ function create ()
 {
 }
 
+function openMenu(){
+    game.openMenu();
+}
+function closeMenu(){
+    game.closeMenu();
+}
+function addAttraction(price, texture){
+    return game.addAttraction(this, price, texture);
+}
+
 function update ()
 {
     this.add.displayList.removeAll();
-    game.update(this, game);
+    game.update();
     game.render(this);
     game.save();
+}
+
+function clear(){
+    localStorage.clear();
+    game.load();
+    location.reload();
 }
