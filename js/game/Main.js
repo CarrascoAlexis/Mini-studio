@@ -1,12 +1,12 @@
 class Game{
-    constructor(amount, rebirth){
+    constructor(){
         this.data = {};
-        this.data.amount = amount;
-        this.data.rebirthCount = rebirth;
-        //this.load();
+        this.init();
     }
 
     init(main){
+        this.data = {};
+        this.load();
         this.initGrid(main);
         this.start = Date.now();
         this.lastFrame = Date.now();
@@ -14,8 +14,6 @@ class Game{
         this.posX = 0;
         this.posY = 0;
         this.scale = 1;
-        this.data.visitorSatisfaction = 1;
-        this.load();
     }
 
     drawMoney(main){
@@ -34,6 +32,8 @@ class Game{
         let y = this.data.attractions.length % 5;
 
         this.data.attractions.push(new Attraction(x, y, "coaster", "roller-coaster"));
+        console.log(this.data.attractions);
+        this.save();
     }
 
     drawTime(main){
@@ -49,9 +49,19 @@ class Game{
         }
     }
 
-    update(main){
+    drawAttractions(main){
+        for(let i = 0; i < this.data.attractions.length; i++){
+            this.data.attractions[i].display(main, this.posX, this.posY, this.scale);
+        }
+    }
+
+    update(main, game){
         this.elapsed = Date.now() - this.lastFrame;
         this.lastFrame = Date.now();
+        for(let i = 0; i < this.data.attractions.length; i++){
+            let value = this.data.attractions[i].worth * this.elapsed / 10000;
+            this.data.amount += value;
+        }
     }
 
     getElapsed(){
@@ -60,6 +70,7 @@ class Game{
 
     render(main){
         this.drawTiles(main);
+        this.drawAttractions(main);
         this.drawMoney(main);   
         this.drawTime(main);
     }
@@ -76,10 +87,6 @@ class Game{
 
     getMoney(){
         return this.data.amount;
-    }
-
-    addMoney(amount){
-        this.data.amount += (this.data.rebirthCount + 1) / 10 * amount * this.data.visitorSatisfaction;
     }
 
     withdrow(amount){
@@ -100,11 +107,12 @@ class Game{
 
     load(){
         this.data = JSON.parse(localStorage.getItem('gameSave'));
-        let tiles = []
-        for(let i = 0; i < this.data.tiles.length; i++){
-            tiles.push(new Tile(this.data.tiles[i].x, this.data.tiles[i].y))
+        console.log(this.data);
+        let attractions = [];
+        for(let i = 0; i < this.data.attractions.length; i++){
+            attractions.push(new Attraction(this.data.attractions[i].x, this.data.attractions[i].y, this.data.attractions[i].type, this.data.attractions[i].texture))
         }
-        this.data.tiles = tiles;
+        this.data.attractions = attractions;
     }
 }
 
@@ -147,9 +155,10 @@ class Attraction{
         
         let imageHeight = 150;
         let imageWidth = 256;
-        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * imageWidth + vueX, window.innerHeight / 2 + imageHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.texture);
+        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * imageWidth + vueX, window.innerHeight / 2 + imageHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, 'this.texture');
         this.image.scaleY = zoom;
         this.image.scaleX = zoom;
+        return true;
     }
 
     update(game){
@@ -204,9 +213,6 @@ document.addEventListener("wheel", function(event) {
     }
 });
 
-let test = new Attraction(0,0, "carousel", "carousel");
-
-
 function preload ()
 {
     this.load.image('roller-coaster', 'assets/roller-coaster.png');
@@ -236,9 +242,7 @@ function create ()
 function update ()
 {
     this.add.displayList.removeAll();
-    game.update(this);
+    game.update(this, game);
     game.render(this);
-    test.update(game);
-    test.display(this, game.posX, game.posY, game.scale);
     game.save();
 }
