@@ -3,6 +3,7 @@ class Game{
         this.data = {};
         this.data.amount = amount;
         this.data.rebirthCount = rebirth;
+        //this.load();
     }
 
     init(main){
@@ -14,6 +15,7 @@ class Game{
         this.posY = 0;
         this.scale = 1;
         this.data.visitorSatisfaction = 1;
+        this.load();
     }
 
     drawMoney(main){
@@ -21,6 +23,17 @@ class Game{
         background.scaleX = 0.6;
         background.scaleY = 0.6;
         main.add.text(110, 38, parseInt(this.data.amount) + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
+    }
+
+    addAttraction(main){
+        if(this.data.attractions == null){
+            this.data.attractions = [];
+        }
+
+        let x = Math.floor(this.data.attractions.length/5);
+        let y = this.data.attractions.length % 5;
+
+        this.data.attractions.push(new Attraction(x, y, "coaster", "roller-coaster"));
     }
 
     drawTime(main){
@@ -87,6 +100,11 @@ class Game{
 
     load(){
         this.data = JSON.parse(localStorage.getItem('gameSave'));
+        let tiles = []
+        for(let i = 0; i < this.data.tiles.length; i++){
+            tiles.push(new Tile(this.data.tiles[i].x, this.data.tiles[i].y))
+        }
+        this.data.tiles = tiles;
     }
 }
 
@@ -126,7 +144,10 @@ class Attraction{
     }
 
     display(main, vueX = 0, vueY = 0, zoom = 1){
-        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * this.grassWidth + vueX, window.innerHeight / 2 + this.grassHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.texture);
+        
+        let imageHeight = 150;
+        let imageWidth = 256;
+        this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * imageWidth + vueX, window.innerHeight / 2 + imageHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.texture);
         this.image.scaleY = zoom;
         this.image.scaleX = zoom;
     }
@@ -183,13 +204,17 @@ document.addEventListener("wheel", function(event) {
     }
 });
 
-let test = new Attraction(0,0, "coaster", "roller-coaster");
+let test = new Attraction(0,0, "carousel", "carousel");
 
 
 function preload ()
 {
     this.load.image('roller-coaster', 'assets/roller-coaster.png');
     this.load.image('carousel', 'assets/carousel.png');
+    this.load.image('circus', 'assets/circus.png');
+    this.load.image('bigwheel', 'assets/bigwheel.png');
+    this.load.image('house', 'assets/house.png');
+    this.load.image('tower', 'assets/tower.png');
 
     this.load.image('money-bg', 'assets/money-bg.png');
     this.load.image('time-bg', 'assets/time-bg.png');
@@ -214,4 +239,6 @@ function update ()
     game.update(this);
     game.render(this);
     test.update(game);
+    test.display(this, game.posX, game.posY, game.scale);
+    game.save();
 }
