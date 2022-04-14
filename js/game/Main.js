@@ -3,33 +3,31 @@ class Game{
         this.data = {};
         this.data.amount = amount;
         this.data.rebirthCount = rebirth;
-        this.start = Date.now();
-        this.lastFrame = Date.now();
-        this.elapsed = 0;
-        this.posX = 0;
-        this.posY = 0;
-        this.scale = 1;
-        this.visitorSatisfaction = 1;
     }
 
     init(main){
         this.initGrid(main);
         this.start = Date.now();
-        this.menu = false;
         this.lastFrame = Date.now();
         this.elapsed = 0;
         this.posX = 0;
         this.posY = 0;
         this.scale = 1;
-        this.visitorSatisfaction = 1;
+        this.data.visitorSatisfaction = 1;
     }
 
     drawMoney(main){
-        main.add.text(0, 0, this.data.amount + "$", { color: 'white', align: 'center', backgroundColor:'blue', padding:10 });
+        let background = main.add.image(10,10,'money-bg').setOrigin(0,0);
+        background.scaleX = 0.6;
+        background.scaleY = 0.6;
+        main.add.text(110, 38, this.data.amount + "$", { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
     }
 
     drawTime(main){
-        main.add.text(window.innerWidth - 260, 0, "Temps de jeu : " + new Date(Date.now() - this.start).toISOString().slice(11, 19), { color: 'white', align: 'center', backgroundColor:'blue', padding:10 });
+        let background = main.add.image(window.innerWidth - 270,10,'time-bg').setOrigin(0,0);
+        background.scaleX = 0.6;
+        background.scaleY = 0.6;
+        main.add.text(window.innerWidth - 170, 38, new Date(Date.now() - this.start).toISOString().slice(11, 19), { color: 'white', align: 'center', fontFamily: "'Brush Script MT', cursive", fontSize: 35});
     }
 
     drawTiles(main){
@@ -48,7 +46,7 @@ class Game{
     }
 
     render(main){
-        this.drawMoney(main);
+        this.drawMoney(main);   
         this.drawTime(main);
         this.drawTiles(main);
     }
@@ -68,7 +66,7 @@ class Game{
     }
 
     addMoney(amount){
-        this.data.amount += (this.data.rebirthCount + 1) / 10 * amount;
+        this.data.amount += (this.data.rebirthCount + 1) / 10 * amount * this.data.visitorSatisfaction;
     }
 
     withdrow(amount){
@@ -97,10 +95,14 @@ class Tile{
         this.x = x;
         this.y = y;
         
-        this.grassHeight = 78;
-        this.grassWidth = 127;
-
-        this.type = "default";
+        this.grassHeight = 128;
+        this.grassWidth = 256;
+        let img = Math.floor(Math.random() * 2);
+        if(img == 0){
+            this.type = "ground-1";
+        }else{
+            this.type = "ground-2";
+        }
     }
 
     setType(type){
@@ -135,7 +137,7 @@ var config = {
 };
 
 var phaserGame = new Phaser.Game(config);
-var game = new Game(100,0, phaserGame);
+var game = new Game(100000,0, phaserGame);
 
 document.addEventListener("keypress", function(event) {
 	switch(event.key){
@@ -169,9 +171,16 @@ document.addEventListener("wheel", function(event) {
 
 function preload ()
 {
-    this.load.image('default', 'assets/grass.png');
     this.load.image('roller-coaster', 'assets/roller-coaster.png');
     this.load.image('carousel', 'assets/carousel.png');
+
+    this.load.image('money-bg', 'assets/money-bg.png');
+    this.load.image('time-bg', 'assets/time-bg.png');
+
+    this.load.image('sub-title', 'assets/sub-title.png');
+
+    this.load.image('ground-1', 'assets/ground-1.png');
+    this.load.image('ground-2', 'assets/ground-2.png');
 
     this.load.audio('music', 'sounds/main.mp3');
 
