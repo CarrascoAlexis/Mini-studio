@@ -6,10 +6,14 @@
 
 .home .video-content {
   position: absolute;
-  left: 0;
+  right: 0;
   bottom: 0;
-  object-fit: cover;
+  width: 100%;
   z-index:-1;
+}
+
+.home .video-content video{
+  width: 100vw;
 }
 
 .home .content{
