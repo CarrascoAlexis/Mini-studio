@@ -32,7 +32,7 @@ class Game{
         if(this.data.amount >= price){
             let x = Math.floor(this.data.attractions.length/5);
             let y = this.data.attractions.length % 5;
-    
+
             this.data.attractions.push(new Attraction(x, y, texture));
             this.data.amount -= price;
             this.save();
@@ -80,7 +80,7 @@ class Game{
 
         img1.on('pointerdown', function() {if(addAttraction(price, image1)) location.reload();})
         img2.on('pointerdown', function() {if(addAttraction(price, image2)) location.reload();})
-            
+
     }
 
     drawAddButton(main){
@@ -147,7 +147,7 @@ class Game{
     render(main){
         this.drawTiles(main);
         this.drawAttractions(main);
-        this.drawMoney(main);   
+        this.drawMoney(main);
         this.drawTime(main);
         this.drawAddButton(main);
         if(this.menu == true){
@@ -205,7 +205,7 @@ class Tile{
     constructor(x, y){
         this.x = x;
         this.y = y;
-        
+
         this.grassHeight = 128;
         this.grassWidth = 256;
         let img = Math.floor(Math.random() * 2);
@@ -257,13 +257,13 @@ var config = {
         update: update
     },
     audio: {
-        disableWebAudio: true,
-        noAudio: true
+        disableWebAudio: true
     }
 };
 
 var phaserGame = new Phaser.Game(config);
 var game = new Game(100,0, phaserGame);
+var music;
 
 document.addEventListener("keypress", function(event) {
 	switch(event.key){
@@ -313,13 +313,25 @@ function preload ()
     this.load.image('ground-1', 'assets/ground-1.png');
     this.load.image('ground-2', 'assets/ground-2.png');
 
-    this.load.audio('music', 'sounds/main.mp3');
+    this.load.audio('music', ["sounds/main.mp3", "sounds/main.ogg"]);
 
     game.init(this);
 }
 
 function create ()
 {
+  this.music= this.sound.add("music");
+
+  var musicConfig = {
+    mute:false,
+    volume:100,
+    rate:1,
+    detune:0,
+    seek:0,
+    loop:true,
+    delay:0
+  }
+  this.music.play(musicConfig);
 }
 
 function openMenu(){
