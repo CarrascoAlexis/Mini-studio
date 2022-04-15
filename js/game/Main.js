@@ -5,19 +5,23 @@ class Game{
     }
 
     init(main){
+        // Crée les données vides
         this.data = {};
         this.start = Date.now();
+        // Chargement de la sauvegarde
         this.load();
+        // Initialisation de la grille du jeu
         this.initGrid(main);
         this.lastFrame = Date.now();
         this.elapsed = 0;
+        // Initialisationd e la position de la caméra et du zoom
         this.posX = 0;
         this.posY = 0;
         this.scale = 1;
-        this.texs = ['']
     }
 
     drawMoney(main){
+        // Affichage du fond puis de la valeur de la money
         let background = main.add.image(10,10,'money-bg').setOrigin(0,0);
         background.scaleX = 0.6;
         background.scaleY = 0.6;
@@ -29,10 +33,13 @@ class Game{
             this.data.attractions = [];
         }
 
+        // Ajoute seulement si il y a assez d'argent
         if(this.data.amount >= price){
+            // Calcul des coordonnées
             let x = Math.floor(this.data.attractions.length/5);
             let y = this.data.attractions.length % 5;
 
+            // Ajout de l'attraction et suppression de la money
             this.data.attractions.push(new Attraction(x, y, texture));
             this.data.amount -= price;
             this.save();
@@ -43,6 +50,7 @@ class Game{
     }
 
     drawTime(main){
+        // Affiche le fond derrière puis la valeur du temps de jeu
         let background = main.add.image(window.innerWidth - 270,10,'time-bg').setOrigin(0,0);
         background.scaleX = 0.6;
         background.scaleY = 0.6;
@@ -50,19 +58,23 @@ class Game{
     }
 
     drawTiles(main){
+        // Affichage de toutes les tuiles
         for(let i = 0; i < this.data.tiles.length; i++){
             this.data.tiles[i].display(main, this.posX, this.posY, this.scale);
         }
     }
 
     drawAttractions(main){
+        // Affichage de toutes les attractions
         for(let i = 0; i < this.data.attractions.length; i++){
             this.data.attractions[i].display(main, this.posX, this.posY, this.scale);
         }
     }
 
     drawMenu(main){
+        // Calcul du prix de l'attraction
         let price = (this.data.attractions.length - 1) * this.data.attractions.length * 500 + 100;
+        // Affichage du menu et des attractions que l'on peut choisir
         main.add.image(window.innerWidth / 2, window.innerHeight / 2, 'menu-bg');
         let height = main.textures.get('menu-bg').getSourceImage().height;
         let width = main.textures.get('menu-bg').getSourceImage().width;
@@ -78,21 +90,23 @@ class Game{
         let image1 = this.image1;
         let image2 = this.image2;
 
-        img1.on('pointerdown', function() {if(addAttraction(price, image1)) location.reload();})
-        img2.on('pointerdown', function() {if(addAttraction(price, image2)) location.reload();})
-
+        // Rendre les images cliquables
+        img1.on('pointerdown', function() {if(addAttraction(price, image1)) location.reload();});
+        img2.on('pointerdown', function() {if(addAttraction(price, image2)) location.reload();});
     }
 
     drawAddButton(main){
+        // Affiche le bouton
         let add = main.add.image(window.innerWidth - 50,window.innerHeight - 50,'close-button').setInteractive();
         add.rotation = Math.PI / 4;
         add.scaleX = 0.5;
         add.scaleY = 0.5;
-        // add.on('pointerdown', function(){ this.openMenu();})
+        // Rend le bouton fonctionel
         add.on('pointerdown', function(){ openMenu()});
     }
 
     openMenu(){
+        // Ouverture du menu, reroll des attractions achetables
         let att1 = parseInt(Math.random() * 6);
         let att2 = parseInt(Math.random() * 6);
 
@@ -144,8 +158,10 @@ class Game{
     }
 
     update(){
+        // Calculer
         this.elapsed = Date.now() - this.lastFrame;
         this.lastFrame = Date.now();
+        // Ajouter 
         for(let i = 0; i < this.data.attractions.length; i++){
             let value = this.data.attractions[i].worth * this.elapsed / 10000;
             this.data.amount += value;
@@ -160,6 +176,8 @@ class Game{
     }
 
     render(main){
+        // Appel de toutes les fonctions de render
+        main.add.image(960,530,'background');
         this.drawTiles(main);
         this.drawAttractions(main);
         this.drawMoney(main);
@@ -171,6 +189,7 @@ class Game{
     }
 
     initGrid(main){
+        // Crée la grille des Tuiles
         this.data.tiles = [];
         for(let i = 0; i < 5; i++){
             for(let j = 0; j < 5; j++){
@@ -187,32 +206,29 @@ class Game{
         this.data.amount -= amount;
     }
 
-    rebirth(){
-        this.data.rebirthCount ++;
-    }
-
     showAmount(){
         console.log(this.data.amount);
     }
 
     save(){
+        // Enregistre en localStorage le JSON des données
         localStorage.setItem('gameSave', JSON.stringify(this.data));
     }
 
     load(){
+        // Charge les données depuis localStorage
         this.data = JSON.parse(localStorage.getItem('gameSave'));
         if(this.data == null){
             this.data = {};
             this.data.attractions = [];
             this.data.amount = 100;
         }
+        // Convertis le tableau d'Attractions en Objet Attractions
         let attractions = [];
         for(let i = 0; i < this.data.attractions.length; i++){
             attractions.push(new Attraction(this.data.attractions[i].x, this.data.attractions[i].y, this.data.attractions[i].tex));
         }
         this.data.attractions = attractions;
-
-        this.time = localStorage.getItem
     }
 }
 
@@ -224,6 +240,7 @@ class Tile{
         this.grassHeight = 128;
         this.grassWidth = 256;
         let img = Math.floor(Math.random() * 2);
+        // initialisation de la texture de la tuine
         if(img == 0){
             this.type = "ground-1";
         }else{
@@ -231,11 +248,8 @@ class Tile{
         }
     }
 
-    setType(type){
-        this.type = type;
-    }
-
     display(main, vueX = 0, vueY = 0, zoom = 1){
+        // Affichage e l'image aux bonnes coordonnées
         this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * this.grassWidth + vueX, window.innerHeight / 2 + this.grassHeight * (0.5 * zoom * (this.y + this.x - 4)) + vueY, this.type);
         this.image.scaleY = zoom;
         this.image.scaleX = zoom;
@@ -247,10 +261,12 @@ class Attraction{
         this.x = x;
         this.y = y;
         this.tex = texture;
+        // Calcul de la valeur de l'attraction (ce que l'attraction raporte)
         this.worth = 100 * (x + 1) * (y + 1);
     }
 
     display(main, vueX = 0, vueY = 0, zoom = 1){
+        // Affichage aux bonnes coordonnées
         let imageHeight = main.textures.get(this.tex).getSourceImage().height;
         this.image = main.add.image(window.innerWidth / 2 + (this.x - this.y) * 0.5 * zoom * 256 + vueX, window.innerHeight / 2 + 128 * (0.5 * zoom * (this.y + this.x - 4)) + vueY - (imageHeight * zoom) / 4, this.tex);
         this.image.scaleY = zoom;
@@ -258,10 +274,12 @@ class Attraction{
     }
 
     update(game){
+        // Update (rajoute la money à game)
         game.addMoney(this.worth * game.getElapsed() / 10000);
     }
 }
 
+// Création de la configuration du jeu
 var config = {
     type: Phaser.AUTO,
     width: window.innerWidth,
@@ -276,10 +294,12 @@ var config = {
     }
 };
 
+// Initialisation des variables de game et Phaser.Game
 var phaserGame = new Phaser.Game(config);
 var game = new Game(100,0, phaserGame);
 var music;
 
+// Ajout des événements pour le déplacement
 document.addEventListener("keypress", function(event) {
 	switch(event.key){
         case "d":{
@@ -300,6 +320,8 @@ document.addEventListener("keypress", function(event) {
         }
     }
 });
+
+// Ajout des événements pour le zoom
 document.addEventListener("wheel", function(event) {
     if(event.deltaY < 0){
         game.scale += 0.1;
@@ -311,6 +333,7 @@ document.addEventListener("wheel", function(event) {
 
 function preload ()
 {
+    // Initiialisation des Sprites
     this.load.image('roller-coaster', 'assets/roller-coaster.png');
     this.load.image('carousel', 'assets/carousel.png');
     this.load.image('circus', 'assets/circus.png');
@@ -329,27 +352,33 @@ function preload ()
     this.load.image('ground-1', 'assets/ground-1.png');
     this.load.image('ground-2', 'assets/ground-2.png');
 
+    this.load.image('background', 'assets/background.jpg')
+
     this.load.audio('music', ["sounds/main.mp3", "sounds/main.ogg"]);
 
+    // Initilisation de la game
     game.init(this);
 }
 
 function create ()
 {
-  this.music= this.sound.add("music");
+     
+    //Lecture de musique
+    this.music= this.sound.add("music");
 
-  var musicConfig = {
-    mute:false,
-    volume:100,
-    rate:1,
-    detune:0,
-    seek:0,
-    loop:true,
-    delay:0
-  }
-  this.music.play(musicConfig);
+    var musicConfig = {
+        mute:false,
+        volume:100,
+        rate:1,
+        detune:0,
+        seek:0,
+        loop:true,
+        delay:0
+    }
+    this.music.play(musicConfig);
 }
 
+// Fonctions à appeller dans les event
 function openMenu(){
     game.openMenu();
 }
@@ -362,6 +391,7 @@ function addAttraction(price, texture){
 
 function update ()
 {
+    // Fonction update de phaser (appelée à chaque Frame)
     this.add.displayList.removeAll();
     game.update();
     game.render(this);
@@ -369,6 +399,7 @@ function update ()
 }
 
 function clear(){
+    // Réinitialisation de la partie
     localStorage.clear();
     game.load();
     location.reload();
